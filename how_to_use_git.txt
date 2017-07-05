@@ -1,0 +1,66 @@
+1.
+git config —global user.name “keemdrop”
+git config -global user.email “keemdrop@gmail.com”
+
+
+2.
+(원하는 폴더 : /Users/keemmaang/MyProject
+ git init 
+
+3.온라인 저장소 만들기 create repository
+
+4.로컬 저장소 만들기
+mkdir ~/MyProject
+(나는 /Users/keemmaang/MyProject
+
+5.
+cd ~/MyProject
+
+6.초기화 
+git init
+:이 디렉토리를 로컬 깃 저장소라고 선언
+
+7.
+touch readme.txt : touch.txt 생성
+
+8.상태확인
+git status
+
+readme.txt - untracked 되있음
+
+9.add
+git add readme.txt //파일추가 -> tracked
+
+10.commit
+git commit -m “message 여기에입력”//commit 해서 스냅샷을 찍는다
+
+
+11.로컬 저장소와 깃허브 저장소 연결하기
+git remote add origin https://github.com/<username>/<myproject>.git
+<username> : user name 깃허브사용자명
+<myproject>: user repository명 
+
+
+//우리껀 git remote add origin https://github.com/kmdrp/mangkyun.git 
+// origin 을 다른걸로해도됨
+
+
+
+git remote -v : 원격 origin에 대한 모든 항목
+
+12 push
+git push : 푸쉬하기
+
+or
+
+git push origin master
+
+////  read read read //////////////////////////////////////////////////////////
+
+1 .먼저 pull !!!!!(항상 커밋하기전에 pull) (git pull origin master) 
+2. 충돌난거있음 수정 (어케하는진 인터넷찾아보셈 초반엔 딱히없을듯)
+3. 새로추가한 거있음 add (git add <파일명>)
+4. commit (git commit / git commit -m “” ) 뒤에 m으로 커밋에대한 설명인데 이거로 하는게 오류더 없느듯 
+5. push (git push origin master) 
+  //일단 마스터 브랜치에 당분간 커밋하고 브랜치 새로 파서 merge 하는것도 해봐야할듯
+

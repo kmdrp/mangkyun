@@ -1,0 +1,6 @@
+#db access info
+driver = "org.mariadb.jdbc.Driver";
+url = "jdbc:mariadb://localhost:3306/testdb";
+uid="user";
+pwd = "madrid";
+

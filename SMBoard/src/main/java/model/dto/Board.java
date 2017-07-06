@@ -2,12 +2,12 @@ package model.dto;
 
 public class Board {
     int board_num;
-    String writer;
+    String writer_id;
+    String writer_nick;
     String content;
     String regdate;
     int reply;
     int like;
-    int hit;
 
     public int getBoard_num() {
         return board_num;
@@ -17,12 +17,20 @@ public class Board {
         this.board_num = board_num;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getWriter_id() {
+        return writer_id;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setWriter_id(String writer_id) {
+        this.writer_id = writer_id;
+    }
+
+    public String getWriter_nick() {
+        return writer_nick;
+    }
+
+    public void setWriter_nick(String writer_nick) {
+        this.writer_nick = writer_nick;
     }
 
     public String getContent() {
@@ -55,13 +63,5 @@ public class Board {
 
     public void setLike(int like) {
         this.like = like;
-    }
-
-    public int getHit() {
-        return hit;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
     }
 }

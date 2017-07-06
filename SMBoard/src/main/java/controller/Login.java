@@ -30,6 +30,8 @@ public class Login extends HttpServlet {
         if(result){
             System.out.println("로그인 성공");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/board/test.jsp");
+            req.setAttribute("id", id);
+            req.setAttribute("pw", pw);
             dispatcher.forward(req,resp);
         }else{
             System.out.println("로그인 실패");

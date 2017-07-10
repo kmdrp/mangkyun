@@ -1,31 +1,11 @@
-<%@ page import="model.dto.Member" %>
-<%@ page import="model.dao.MemberDAO" %>
-<%@ page import="model.dao.BoardDAO" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dto.Board" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%!
-    BoardDAO boardDAO=new BoardDAO();
-%>
-<%
-    //로그인 체크
-    //session 으로 바꾸자
-    SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String nowDate = format.format(new Date());
 
-    String id =request.getParameter("id");
-    String pw = (String) request.getAttribute("pw");
-    if (id != null) {
-        System.out.println("메인 페이지 아이디 / 패스워드 : " + id+" / "+pw);
-    }else{
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String id =(String) session.getAttribute("id");
+    if (id == null) {
         System.out.println("로그인 정보 없음");
         response.sendRedirect("/board/index.jsp");
     }
-    ArrayList<Board> list = (ArrayList<Board>)boardDAO.selectAll();
-    System.out.println("게시물 수 : " + list.size());
-    System.out.println();
 %>
 <html>
 <head>
@@ -41,6 +21,7 @@
             background-color: rgba(239, 239, 239, 0.75);
         }
         #content{
+            border: 1px solid #1E90FF;
             background-color: white;
             width: 100%;
             height: 200px;
@@ -59,8 +40,8 @@
             margin: 0px;
         }
         .text_area{
+            border: none;
             font-size: 10pt;
-            border: 1px solid blue;
             height: 130px;
             width: 95%;
             margin-top: 15px;
@@ -100,22 +81,32 @@
             font-size: 9pt;
         }
     </style>
-
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+        window.addEventListener("load",function(){
 
-        var btn_write = document.getElementById("btn_write");
-        var btn_cancle = document.getElementById("btn_cancel");
-
-        btn_write.addEventListener("click",function(){
-            var form2 = document.getElementById("form2");
-            form2.action = "/write";
-            form2.method = "post";
-            form2.submit();
+            var btn_write = document.getElementById("btn_write");
+            var btn_cancel = document.getElementById("btn_cancel");
+            var val3;
+            btn_write.addEventListener("click",function(){
+                var form2=document.getElementById("form2");
+                val3=$("textarea#txtArea").val();
+                if(val3.length==0){
+                    alert("글을 입력하세요");
+                }else if(document.getElementById("userId").value==null){
+                    alert("!");
+                }else{
+                    form2.method = "post";
+                    form2.action = "/write";
+                    form2.submit();
+                }
+            });
+            btn_cancel.addEventListener("click",function(){
+                var form2=document.getElementById("form2");
+                form2.action="/board"
+                form2.submit();
+            });
         });
-        btn_cancle.addEventListener("click",function(){
-
-        });
-
 
     </script>
 </head>
@@ -126,10 +117,10 @@
 <article>
     <div id="cen">
         <div id="content">
-            <form id="form2" action="/write" method="post">
+            <form id="form2" method="post" >
                 <div id="input">
-                <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                    <textarea id="textarea" name="content" class="text_area" placeholder="내용을 입력해주세요"></textarea>
+                <input type="text" class="noSize" id="userId" value="<%=id%>" name="id" readonly hidden/>
+                    <textarea id="txtArea" name="content" class="text_area" placeholder="내용을 입력해주세요" minlength="1"></textarea>
                 </div>
                 <div id="btn">
                     <div id="upload_img">
@@ -138,7 +129,7 @@
                     <div id="btnClick">
                         <input type="checkbox" name="anonymity" value="익명"/>익명
                         <button id="btn_write" class="button_write">완료</button>
-                        <button id="btn_cancle" class="button_cancle">취소</button>
+                        <button id="btn_cancel" class="button_cancle">취소</button>
                     </div>
                 </div>
             </form>

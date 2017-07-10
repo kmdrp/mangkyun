@@ -33,7 +33,6 @@ public class LoginController extends HttpServlet {
         boolean result = dao.login(id, pw);
         session = req.getSession();
 
-        System.out.println(session);
         if(result){
             System.out.println("로그인 성공");
             session.setAttribute("id", id);

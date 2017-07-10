@@ -1,18 +1,12 @@
-<%@ page import="model.dao.BoardDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.dto.Board" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%!
 
-    BoardDAO boardDAO=new BoardDAO();
-%>
 <%
     request.setCharacterEncoding("utf-8");
     response.setCharacterEncoding("utf-8");
-    //로그인 체크
-    //session 으로 바꾸자
     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String nowDate = format.format(new Date());
 
@@ -21,14 +15,14 @@
         System.out.println("로그인 정보 없음");
         response.sendRedirect("/board/index.jsp");
     }else{
-        System.out.println(id+" 가 board 이용중");
+        System.out.println("접속자 id : " +id);
+        System.out.println();
     }
     ArrayList<Board> list = (ArrayList)request.getAttribute("list");
-    System.out.println("게시물 수 : " + list.size());
-    System.out.println();
 %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title>test</title>
     <style>
         body{
@@ -79,9 +73,26 @@
             float:right;
             text-align: center;
         }
+        .search{
+            display: none;
+        }
     </style>
-
     <script>
+        window.addEventListener("load",function () {
+            var btn_find=document.getElementById("btn_find");
+            var finder = document.getElementById("finder");
+            btn_find.onclick=function(){
+                var tgg=document.getElementById("search2");
+                for(var i;i<tgg.length;i++) {
+                    tgg.display = "block";
+                }
+            }
+        });
+
+
+        function alertA(){
+            alert("aa");
+        }
 
     </script>
 </head>
@@ -96,6 +107,9 @@
                     <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
                     <button type="submit" class="search_item"  id="finder" >&nbsp; 여기를 눌러 글을 작성해 주세요</button>
                     <input type="button" value="검색" class="search_item search_btn" id="btn_find" style=""/>
+                    <form class="search" style="display: none">
+                        <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
+                    </form>
                 </form>
             </div>
             <div id="board">

@@ -28,9 +28,7 @@ public class WriteController extends HttpServlet {
         String id = (String) session.getAttribute("id");
         String nick = (String) session.getAttribute("nick");
         String content = req.getParameter("content");
-        System.out.println("id = " + id);
-        System.out.println("nick = " + nick);
-        System.out.println("content = " + content);
+
         boardDAO.write(id,nick,content);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/board");
         dispatcher.forward(req,resp);

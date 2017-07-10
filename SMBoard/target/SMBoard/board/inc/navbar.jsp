@@ -57,15 +57,14 @@
         window.onload=function() {
             var btn_home = document.getElementById("btn_home");
             var btn_user = document.getElementById("btn_user");
-            btn_home.addEventListener("click",homeClick);
-            //btn_user.addEventListener("click", mypage);
+            btn_home.onclick=function () {
+                location.href = "/board";
+            }
             btn_user.onclick=function () {
                 alert(" my page "); // 위에 꺼랑 똑같ㅇ
             }
         }
-        function homeClick() {
-            location.href = "/board/test.jsp";
-        }
+
         function mypage() {
             alert("mypage");
         }

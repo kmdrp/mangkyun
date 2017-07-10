@@ -7,11 +7,20 @@
 
   <servlet>
     <servlet-name>join</servlet-name>
-    <servlet-class>controller.Join</servlet-class>
+    <servlet-class>controller.JoinController</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>login</servlet-name>
-    <servlet-class>controller.Login</servlet-class>
+    <servlet-class>controller.LoginController</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>board</servlet-name>
+    <servlet-class>controller.BoardController</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>write</servlet-name>
+    <servlet-class>controller.WriteController</servlet-class>
   </servlet>
 
 
@@ -24,6 +33,16 @@
     <servlet-name>login</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>board</servlet-name>
+    <url-pattern>/board</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>write</servlet-name>
+    <url-pattern>/write</url-pattern>
+  </servlet-mapping>
+
+
   
   
 </web-app>

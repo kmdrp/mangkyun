@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.dto.Board;
+import model.dto.Member;
 import model.manager.PoolManager;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class BoardDAO {
         Connection con = manager.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs=null;
-        String sql = "select * from Board";
+        String sql = "select * from Board order by board_num desc";
         try {
             pstmt = con.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -67,21 +68,27 @@ public class BoardDAO {
     public void write(String writer_id,String writer_nickname,String content){
         Connection con = manager.getConnection();
         PreparedStatement pstmt=null;
-        String sql="insert into board(writer_id,writer_nickname,content) values(?,?,?)";
+
+        String sql="insert into board(writer_id,writer_nick,content) values(?,?,?)";
         int result;
         try {
             pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, writer_id);
+            pstmt.setString(2, writer_nickname);
+            pstmt.setString(3, content);
+
             result = pstmt.executeUpdate();
             if(result==1){
-                // 글 등록 성공 --> 다시 게시판 메인으로이동
+                System.out.println("글 등록 성공");
             }else{
+                System.out.println("글 등록 실패");
                 //작성 실패 --> 글 작성 다시
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            manager.freeConnection(con,pstmt);
         }
-
-
     }
 
 }

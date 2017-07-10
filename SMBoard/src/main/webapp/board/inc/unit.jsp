@@ -1,6 +1,3 @@
-<%@ page import="model.dto.Member" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     int board_num = Integer.parseInt(request.getParameter("board_num"));
@@ -9,13 +6,11 @@
     String regdate = request.getParameter("regdate").substring(0,19);
     String nowDate = request.getParameter("nowDate");
 
-    System.out.println(regdate+" / "+nowDate);
     if (regdate != nowDate) {
         if(regdate.substring(0,10).equals(nowDate.substring(0,10))){
             int regValue = Integer.parseInt(regdate.substring(11, 13)) * 3600 + Integer.parseInt(regdate.substring(14, 16)) * 60 + Integer.parseInt(regdate.substring(17, 19));
             int nowValue = Integer.parseInt(nowDate.substring(11, 13)) * 3600 + Integer.parseInt(nowDate.substring(14, 16)) * 60 + Integer.parseInt(nowDate.substring(17, 19));
             int timeDiff = nowValue - regValue;
-            System.out.println(timeDiff);
             if (timeDiff < 60) {
                 regdate = "방금";
             } else if (timeDiff > 60 && timeDiff < 3600) {

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-public class Join extends javax.servlet.http.HttpServlet{
+public class JoinController extends javax.servlet.http.HttpServlet{
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doService(req,resp);
@@ -20,6 +20,8 @@ public class Join extends javax.servlet.http.HttpServlet{
         doService(req,resp);
     }
     protected void doService(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
         MemberDAO dao = new MemberDAO();
         PrintWriter writer = new PrintWriter(new OutputStreamWriter(resp.getOutputStream()));
         String id = req.getParameter("id");

@@ -1,5 +1,3 @@
-<%@ page import="model.dto.Member" %>
-<%@ page import="model.dao.MemberDAO" %>
 <%@ page import="model.dao.BoardDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.dto.Board" %>
@@ -7,23 +5,25 @@
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%!
+
     BoardDAO boardDAO=new BoardDAO();
 %>
 <%
+    request.setCharacterEncoding("utf-8");
+    response.setCharacterEncoding("utf-8");
     //로그인 체크
     //session 으로 바꾸자
     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String nowDate = format.format(new Date());
 
-    String id =(String) request.getParameter("id");
-    String pw = (String) request.getAttribute("pw");
-    if (id != null) {
-        System.out.println("메인 페이지 아이디 / 패스워드 : " + id+" / "+pw);
-    }else{
+    String id = (String)session.getAttribute("id");
+    if (id == null) {
         System.out.println("로그인 정보 없음");
         response.sendRedirect("/board/index.jsp");
+    }else{
+        System.out.println(id+" 가 board 이용중");
     }
-    ArrayList<Board> list = (ArrayList<Board>)boardDAO.selectAll();
+    ArrayList<Board> list = (ArrayList)request.getAttribute("list");
     System.out.println("게시물 수 : " + list.size());
     System.out.println();
 %>
@@ -41,20 +41,23 @@
             background-color: rgba(239, 239, 239, 0.75);
         }
         #search{
-            background-color: white;
+            background-color: rgba(239, 239, 239, 0.75);
             width: 100%;
-            height: 50px;
+            height: 45px;
             text-align: center;
-            margin-top: 5px;
-            border:0.5px solid #dadada;
+            margin-top: 0px;
+        }
+        #finder{
+            border:1px solid #dadada;
         }
         .search_item{
+            border:1px solid #dadada;
             width: 480px;
-            height: 40px;
+            height: 45px;
             display: inline-block;
             float: left;
-            margin:5px;
-            font-size:15pt;
+            margin:0px;
+            font-size:12pt;
             background-color: #FFFFFF;
             text-align: left;
             color:darkgrey;
@@ -71,18 +74,14 @@
             height: 100px;
             background-color: #e3e3e3;
         }*/
-    </style>
-    <script>
-        window.onload=function(){
-            var form1=document.getElementById("form1");
-            //var finder = document.getElementById("finder");
-            function doWrite(){
-                form1.method = "post";
-                form1.action = "/board/write.jsp";
-                form1.submit();
-            }
+        .search_btn{
+            width:13%;margin-left:10px;background-color: white;
+            float:right;
+            text-align: center;
         }
+    </style>
 
+    <script>
 
     </script>
 </head>
@@ -93,10 +92,10 @@
     <article>
         <div id="cen">
             <div id="search">
-                <form id="form1">
+                <form id="form2" action="/board/write.jsp" method="post">
                     <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                    <button  class="search_item" name="search" id="finder" onclick="doWrite()" >글을 작성하려면 클릭해주세요</button>
-                    <input type="button" value="검색" class="search_item" id="btn_find" style="width:15%; margin-left:10px;background-color: white"/>
+                    <button type="submit" class="search_item"  id="finder" >&nbsp; 여기를 눌러 글을 작성해 주세요</button>
+                    <input type="button" value="검색" class="search_item search_btn" id="btn_find" style=""/>
                 </form>
             </div>
             <div id="board">

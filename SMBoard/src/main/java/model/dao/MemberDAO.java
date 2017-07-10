@@ -65,4 +65,29 @@ public class MemberDAO {
         return result;
     }
 
+    public String getNick(String id) {
+        String nick=null;
+        Connection con = manager.getConnection();
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sql = "select nickname from member where id=?";
+
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                nick=rs.getString("nickname");
+            }else{
+                System.out.println(" *오류 : 닉네임 없음 ! ");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            manager.freeConnection(con, pstmt, rs);
+        }
+        return nick;
+
+    }
+
 }

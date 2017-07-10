@@ -64,4 +64,24 @@ public class BoardDAO {
         return cnt;
     }
 
+    public void write(String writer_id,String writer_nickname,String content){
+        Connection con = manager.getConnection();
+        PreparedStatement pstmt=null;
+        String sql="insert into board(writer_id,writer_nickname,content) values(?,?,?)";
+        int result;
+        try {
+            pstmt = con.prepareStatement(sql);
+            result = pstmt.executeUpdate();
+            if(result==1){
+                // 글 등록 성공 --> 다시 게시판 메인으로이동
+            }else{
+                //작성 실패 --> 글 작성 다시
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }

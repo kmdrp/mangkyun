@@ -19,6 +19,7 @@
         System.out.println();
     }
     ArrayList<Board> list = (ArrayList)request.getAttribute("list");
+    int last_bno = 0 ;
 %>
 <html>
 <head>
@@ -83,6 +84,7 @@
             var btn_find=document.getElementById("btn_find");
             var form2 = document.getElementById("form2");
             var flag=true;
+
             btn_find.addEventListener("click",function () {
                 if(flag) {
                     flag=!flag;
@@ -139,6 +141,7 @@
             <div id="board">
                 <%for(int i=0;i<list.size();i++){
                     Board board = list.get(i);
+                    last_bno = board.getBoard_num();
                 %>
                 <div onclick="showView(<%=board.getBoard_num()%>)">
                 <jsp:include page="inc/unit.jsp">
@@ -155,4 +158,19 @@
         </div>
     </article>
 </body>
+<script>
+    //무한 스크롤
+    function lastPostFunc() {
+        $.get("/board",function (<%=last_bno%>) {
+            $("#board").innerHTML="";
+        });
+    }
+    $(window).scroll( function() {
+        if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+            lastPostFunc();
+        }
+    });
+
+
+</script>
 </html>

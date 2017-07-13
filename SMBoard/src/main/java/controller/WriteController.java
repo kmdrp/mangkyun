@@ -39,6 +39,8 @@ public class WriteController extends HttpServlet {
             resp.sendRedirect("/board");
         }
         boardDAO.write(id,nick,content,anon);
+        //int first_bno=0;
+        //req.setAttribute("first_bno",first_bno);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/board");
         dispatcher.forward(req,resp);
     }

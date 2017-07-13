@@ -37,6 +37,7 @@ public class LoginController extends HttpServlet {
             System.out.println("로그인 성공");
             session.setAttribute("id", id);
             session.setAttribute("nick", nick);
+
             RequestDispatcher dispatcher = req.getRequestDispatcher("/board");
             session.setAttribute("id",id);
             dispatcher.forward(req,resp);

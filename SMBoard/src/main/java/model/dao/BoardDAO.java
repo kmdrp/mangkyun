@@ -142,5 +142,37 @@ public class BoardDAO {
             manager.freeConnection(con,pstmt);
         }
     }
+    public List selectB(int start){
+
+        ArrayList<Board> list = new ArrayList<Board>();
+        Connection con = manager.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs=null;
+        String sql = "select * from Board where board_num>=? and board_num<?  order by board_num desc";
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,start);
+            pstmt.setInt(2,start+30);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Board board = new Board();
+                board.setBoard_num(rs.getInt("board_num"));
+                board.setWriter_id(rs.getString("writer_id"));
+                board.setWriter_nick(rs.getString("writer_nick"));
+                board.setContent(rs.getString("content"));
+                board.setAnony(rs.getInt("anony"));
+                board.setRegdate(rs.getString("regdate"));
+                board.setLike(rs.getInt("cnt_like"));
+                // int reply = countReply(board.getBoard_num());
+                // board.setReply(reply);
+                list.add(board);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            manager.freeConnection(con,pstmt,rs);
+        }
+        return list;
+    }
 
 }

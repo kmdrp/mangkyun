@@ -6,7 +6,10 @@
     String regdate = request.getParameter("regdate").substring(0,19);
     String nowDate = request.getParameter("nowDate");
     int anony = Integer.parseInt(request.getParameter("anony"));
+<<<<<<< HEAD
     System.out.println(anony);
+=======
+>>>>>>> 7e7ee10ae8decd4a30a6a8c7deb1c8a2920f250b
     if(anony==1){
         writer_nick="익명";
     }

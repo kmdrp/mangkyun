@@ -115,6 +115,7 @@
                 <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                 <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                 <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
+                <jsp:param name="anony" value="<%=board.getAnony()%>"></jsp:param>
                 <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
                 <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
             </jsp:include>

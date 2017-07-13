@@ -6,6 +6,7 @@ public class Board {
     String writer_nick;
     String content;
     String regdate;
+    int anony;
     int reply;
     int like;
 
@@ -47,6 +48,14 @@ public class Board {
 
     public void setRegdate(String regdate) {
         this.regdate = regdate;
+    }
+
+    public int getAnony() {
+        return anony;
+    }
+
+    public void setAnony(int anony) {
+        this.anony = anony;
     }
 
     public int getReply() {

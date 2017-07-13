@@ -28,8 +28,17 @@ public class WriteController extends HttpServlet {
         String id = (String) session.getAttribute("id");
         String nick = (String) session.getAttribute("nick");
         String content = req.getParameter("content");
-
-        boardDAO.write(id,nick,content);
+        String an[]=req.getParameterValues("anony");
+        int anon=0;
+        if(an.length==2){
+            anon=1;
+        }else{
+            anon=0;
+        }
+        if(id==null){
+            resp.sendRedirect("/board");
+        }
+        boardDAO.write(id,nick,content,anon);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/board");
         dispatcher.forward(req,resp);
     }

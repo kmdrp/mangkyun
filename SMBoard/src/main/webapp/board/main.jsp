@@ -80,15 +80,38 @@
     <script>
         window.addEventListener("load",function () {
             var btn_find=document.getElementById("btn_find");
-            var finder = document.getElementById("finder");
-            btn_find.onclick=function(){
-                var tgg=document.getElementById("search2");
-                for(var i;i<tgg.length;i++) {
-                    tgg.display = "block";
-                }
-            }
-        });
+            var form2 = document.getElementById("form2");
+            var flag=true;
+            btn_find.addEventListener("click",function () {
+                if(flag) {
+                    flag=!flag;
+                    form2.removeChild(document.getElementById("finder"));
+                    var findTxt = document.createElement("input");
+                    findTxt.name = "findTxt";
+                    findTxt.type = "text";
+                    findTxt.id = "findTxt";
+                    findTxt.placeholder = "  글 검색,해쉬태그 검색";
+                    form2.action = "/search";
 
+                    form2.appendChild(findTxt);
+
+                    document.getElementById("btn_find").value = "취소";
+
+                }else{
+                    flag=!flag;
+                    form2.removeChild(document.getElementById("findTxt"));
+                    var finder = document.createElement("button");
+                    finder.id = "finder";
+                    finder.type = "submit";
+                    finder.innerText="&nbsp;"
+                    finder.innerText ="여기를 눌러 글을 작성해 주세요";
+                    document.getElementById("btn_find").value = "검색";
+                    form2.action="/board/write.jsp";
+                    form2.appendChild(finder);
+
+                }
+            });
+        });
 
         function showView(board_num){
             location.href = "/detail?board_num="+board_num;
@@ -105,8 +128,8 @@
             <div id="search">
                 <form id="form2" action="/board/write.jsp" method="post">
                     <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                    <button type="submit" class="search_item"  id="finder" >&nbsp; 여기를 눌러 글을 작성해 주세요</button>
-                    <input type="button" value="검색" class="search_item search_btn" id="btn_find" style=""/>
+                    <button type="submit" class="search_item"  id="finder" >여기를 눌러 글을 작성해 주세요</button>
+                    <input type="button" value="검색" class="search_item search_btn" id="btn_find"/>
                     <form class="search" style="display: none">
                         <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
                     </form>
@@ -121,6 +144,7 @@
                     <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
+                    <jsp:param name="anony" value="<%=board.getAnony()%>"></jsp:param>
                     <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>

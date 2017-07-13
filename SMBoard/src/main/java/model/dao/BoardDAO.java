@@ -30,10 +30,11 @@ public class BoardDAO {
                 board.setWriter_id(rs.getString("writer_id"));
                 board.setWriter_nick(rs.getString("writer_nick"));
                 board.setContent(rs.getString("content"));
+                board.setAnony(rs.getInt("anony"));
                 board.setRegdate(rs.getString("regdate"));
                 board.setLike(rs.getInt("cnt_like"));
-               // int reply = countReply(board.getBoard_num());
-               // board.setReply(reply);
+                // int reply = countReply(board.getBoard_num());
+                // board.setReply(reply);
                 list.add(board);
             }
         } catch (SQLException e) {
@@ -65,17 +66,17 @@ public class BoardDAO {
         return cnt;
     }
 
-    public void write(String writer_id,String writer_nickname,String content){
+    public void write(String writer_id,String writer_nickname,String content,int anony){
         Connection con = manager.getConnection();
         PreparedStatement pstmt=null;
-
-        String sql="insert into board(writer_id,writer_nick,content) values(?,?,?)";
+        String sql="insert into board(writer_id,writer_nick,content,anony) values(?,?,?,?)";
         int result;
         try {
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, writer_id);
             pstmt.setString(2, writer_nickname);
             pstmt.setString(3, content);
+            pstmt.setInt(4, anony);
 
             result = pstmt.executeUpdate();
             if(result==1){

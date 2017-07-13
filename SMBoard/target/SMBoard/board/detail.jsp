@@ -115,29 +115,35 @@
                 <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                 <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                 <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
+                <jsp:param name="anony" value="<%=board.getAnony()%>"></jsp:param>
                 <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
                 <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
             </jsp:include>
         </div>
         <div id="search">
-            <form id="form2" action="/board/reply.jsp" method="post">
+            <form id="form2" action="/reply" method="post">
                 <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                <input type="text" class="search_item" placeholder="여기에 댓글을 입력하세요"/>
-                <input type="submit" value="등록" class="search_item search_btn" id="btn_find" style=""/>
-                <form class="search" style="display: none">
-                    <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
-                </form>
+                <input type="text" class="noSize" value="<%=board.getBoard_num()%>" name="board_num" readonly hidden/>
+                <input type="text" class="search_item" name="content" placeholder="여기에 댓글을 입력하세요"/>
+                <div id="btnClick">
+                    <input type="checkbox" name="anony" value="0" checked hidden>
+                    <input type="checkbox" name="anony" value=1>익명
+                </div>
+                <input type="submit" value="등록" class="search_item search_btn" id="btn_find"/>
             </form>
         </div>
 
         <div id="replys">
             <%for(int i=0;i<list.size();i++){
                 Reply reply = list.get(i);
+                System.out.println(reply.getAnony() + "in detail.jsp");
+
             %>
                 <jsp:include page="inc/unitReply.jsp">
                     <jsp:param name="reply_num" value="<%=reply.getReply_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=reply.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=reply.getContent()%>"></jsp:param>
+                    <jsp:param name="anony" value="<%=reply.getAnony()%>"></jsp:param>
                     <jsp:param name="regdate" value="<%=reply.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>

@@ -127,7 +127,8 @@
                         <%--사진업로드--%>
                     </div>
                     <div id="btnClick">
-                        <input type="checkbox" name="anonymity" value="익명"/>익명
+                        <input type="checkbox" name="anony" value="0" checked hidden>
+                        <input type="checkbox" name="anony" value=1>익명
                         <button id="btn_write" class="button_write">완료</button>
                         <button id="btn_cancel" class="button_cancle">취소</button>
                     </div>

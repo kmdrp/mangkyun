@@ -33,6 +33,11 @@
     <servlet-class>controller.DeleteController</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>reply</servlet-name>
+    <servlet-class>controller.ReplyController</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>join</servlet-name>
     <url-pattern>/join</url-pattern>
@@ -57,6 +62,10 @@
   <servlet-mapping>
     <servlet-name>delete</servlet-name>
     <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>reply</servlet-name>
+    <url-pattern>/reply</url-pattern>
   </servlet-mapping>
 
   

@@ -1,6 +1,7 @@
 package controller;
 
 import model.dao.BoardDAO;
+import model.dao.ReplyDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-public class WriteController extends HttpServlet {
+public class ReplyController extends HttpServlet {
     HttpSession session;
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doService(req,resp);
@@ -24,11 +25,12 @@ public class WriteController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
         session = req.getSession();
-        BoardDAO boardDAO = new BoardDAO();
+        ReplyDAO replyDAO = new ReplyDAO();
         String id = (String) session.getAttribute("id");
         String nick = (String) session.getAttribute("nick");
         String content = req.getParameter("content");
         String an[]=req.getParameterValues("anony");
+        int board_num = Integer.parseInt(req.getParameter("board_num"));
         int anon=0;
         if(an.length==2){
             anon=1;
@@ -38,7 +40,7 @@ public class WriteController extends HttpServlet {
         if(id==null){
             resp.sendRedirect("/board");
         }
-        boardDAO.write(id,nick,content,anon);
+        replyDAO.write(id,nick,content,anon, board_num);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/board");
         dispatcher.forward(req,resp);
     }

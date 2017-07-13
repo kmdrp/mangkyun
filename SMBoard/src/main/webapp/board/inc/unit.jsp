@@ -5,6 +5,10 @@
     String content = request.getParameter("content");
     String regdate = request.getParameter("regdate").substring(0,19);
     String nowDate = request.getParameter("nowDate");
+    int anony = Integer.parseInt(request.getParameter("anony"));
+    if(anony==1){
+        writer_nick="익명";
+    }
 
     if (regdate != nowDate) {
         if(regdate.substring(0,10).equals(nowDate.substring(0,10))){

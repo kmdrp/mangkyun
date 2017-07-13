@@ -43,10 +43,7 @@
         }
         #finder{
             border:1px solid #dadada;
-        }
-        .search_item{
-            border:1px solid #dadada;
-            width: 480px;
+            width: 500px;
             height: 45px;
             display: inline-block;
             float: left;
@@ -62,19 +59,23 @@
             padding: 0px;
             margin: 0px;
         }
-        /*#post {
-            margin-top: 10px;
-            width: 100%;
-            height: 100px;
-            background-color: #e3e3e3;
-        }*/
+
         .search_btn{
+            border:1px solid #dadada;
+            height: 100%;
             width:13%;margin-left:10px;background-color: white;
             float:right;
             text-align: center;
         }
-        .search{
-            display: none;
+        #findTxt {
+            float:left;
+            height: 100%;
+            width: 500px;
+            font-size:12pt;
+            border:1px solid #dadada;
+        }
+        #btn_find {
+            font-size: 12pt;
         }
     </style>
     <script>

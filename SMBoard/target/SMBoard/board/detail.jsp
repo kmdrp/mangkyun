@@ -2,6 +2,7 @@
 <%@ page import="model.dto.Board" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="model.dto.Reply" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -18,7 +19,8 @@
         System.out.println("접속자 id : " +id);
         System.out.println();
     }
-    ArrayList<Board> list = (ArrayList)request.getAttribute("list");
+    Board board = (Board) request.getAttribute("board");
+    ArrayList<Reply> list = (ArrayList) request.getAttribute("replyList");
 %>
 <html>
 <head>
@@ -90,44 +92,59 @@
         });
 
 
-        function showView(board_num){
-            location.href = "/detail?board_num="+board_num;
+        function alertA(){
+            alert("aa");
         }
 
     </script>
 </head>
 <body>
-    <nav>
-        <jsp:include page="/board/inc/navbar.jsp"/>
-    </nav>
-    <article>
-        <div id="cen">
-            <div id="search">
-                <form id="form2" action="/board/write.jsp" method="post">
-                    <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                    <button type="submit" class="search_item"  id="finder" >&nbsp; 여기를 눌러 글을 작성해 주세요</button>
-                    <input type="button" value="검색" class="search_item search_btn" id="btn_find" style=""/>
-                    <form class="search" style="display: none">
-                        <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
-                    </form>
+<nav>
+    <jsp:include page="/board/inc/navbar.jsp"/>
+</nav>
+<article>
+    <div id="cen">
+        <%
+            if(id.equals(board.getWriter_id())){
+        %>
+        <a href="/update?board_num=<%=board.getBoard_num()%>"><input class="search_btn search_item" type="button" value="수정"/></a>
+        <a href="/delete?board_num=<%=board.getBoard_num()%>"><input class="search_btn search_item" type="button" value="삭제"/></a>
+        <%}%>
+        <div id="board">
+            <jsp:include page="inc/unit.jsp">
+                <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
+                <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
+                <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
+                <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
+                <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
+            </jsp:include>
+        </div>
+        <div id="search">
+            <form id="form2" action="/board/reply.jsp" method="post">
+                <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
+                <input type="text" class="search_item" placeholder="여기에 댓글을 입력하세요"/>
+                <input type="submit" value="등록" class="search_item search_btn" id="btn_find" style=""/>
+                <form class="search" style="display: none">
+                    <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
                 </form>
-            </div>
-            <div id="board">
-                <%for(int i=0;i<list.size();i++){
-                    Board board = list.get(i);
-                %>
-                <div onclick="showView(<%=board.getBoard_num()%>)">
-                <jsp:include page="inc/unit.jsp">
-                    <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
-                    <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
-                    <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
-                    <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
+            </form>
+        </div>
+
+        <div id="replys">
+            <%for(int i=0;i<list.size();i++){
+                Reply reply = list.get(i);
+            %>
+                <jsp:include page="inc/unitReply.jsp">
+                    <jsp:param name="reply_num" value="<%=reply.getReply_num()%>"></jsp:param>
+                    <jsp:param name="writer_nick" value="<%=reply.getWriter_nick()%>"></jsp:param>
+                    <jsp:param name="content" value="<%=reply.getContent()%>"></jsp:param>
+                    <jsp:param name="regdate" value="<%=reply.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>
-                </div>
-                <%}%>
-            </div>
+            <%}%>
         </div>
-    </article>
+    </div>
+
+</article>
 </body>
 </html>

@@ -1,16 +1,13 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="SMBoard:war exploded">
+  <artifact type="exploded-war" name="SMBoard:Web exploded">
     <output-path>$PROJECT_DIR$/target/SMBoard</output-path>
     <root id="root">
+      <element id="javaee-facet-resources" facet="SMBoard/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="SMBoard" />
         </element>
       </element>
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/SMBoard/META-INF/MANIFEST.MF" />
-      </element>
-      <element id="javaee-facet-resources" facet="SMBoard/web/Web" />
     </root>
   </artifact>
 </component>

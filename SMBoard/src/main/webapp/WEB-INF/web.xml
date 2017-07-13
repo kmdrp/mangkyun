@@ -23,6 +23,15 @@
     <servlet-class>controller.WriteController</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>detail</servlet-name>
+    <servlet-class>controller.DetailController</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>delete</servlet-name>
+    <servlet-class>controller.DeleteController</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>join</servlet-name>
@@ -41,8 +50,15 @@
     <servlet-name>write</servlet-name>
     <url-pattern>/write</url-pattern>
   </servlet-mapping>
-
+  <servlet-mapping>
+    <servlet-name>detail</servlet-name>
+    <url-pattern>/detail</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>delete</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
 
   
-  
+
 </web-app>

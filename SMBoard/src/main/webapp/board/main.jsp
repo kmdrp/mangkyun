@@ -90,8 +90,8 @@
         });
 
 
-        function alertA(){
-            alert("aa");
+        function showView(board_num){
+            location.href = "/detail?board_num="+board_num;
         }
 
     </script>
@@ -116,6 +116,7 @@
                 <%for(int i=0;i<list.size();i++){
                     Board board = list.get(i);
                 %>
+                <div onclick="showView(<%=board.getBoard_num()%>)">
                 <jsp:include page="inc/unit.jsp">
                     <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
@@ -123,6 +124,7 @@
                     <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>
+                </div>
                 <%}%>
             </div>
         </div>

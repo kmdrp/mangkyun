@@ -1,6 +1,7 @@
 <component name="libraryTable">
-  <library name="servlet-api">
+  <library name="lib">
     <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/mariadb-java-client-1.5.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/servlet-api.jar!/" />
     </CLASSES>
     <JAVADOC />

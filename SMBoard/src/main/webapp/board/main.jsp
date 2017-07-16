@@ -13,7 +13,7 @@
     String id = (String)session.getAttribute("id");
     if (id == null) {
         System.out.println("로그인 정보 없음");
-        response.sendRedirect("/board/index.jsp");
+        //response.sendRedirect("/board/index.jsp");
     }else{
         System.out.println("접속자 id : " +id);
         System.out.println();
@@ -44,7 +44,7 @@
         }
         #finder{
             border:1px solid #dadada;
-            width: 500px;
+            width: 520px;
             height: 45px;
             display: inline-block;
             float: left;
@@ -64,19 +64,35 @@
         .search_btn{
             border:1px solid #dadada;
             height: 100%;
-            width:13%;margin-left:10px;background-color: white;
+            width:50px;
+            margin-left:10px;
+            background-color: white;
             float:right;
             text-align: center;
         }
         #findTxt {
             float:left;
-            height: 100%;
-            width: 500px;
+            height: 44px;
+            width: 470px;
             font-size:12pt;
-            border:1px solid #dadada;
+            border:none;
+        }
+        #findBtn {
+            float: left;
+            height: 44px;
+            width: 50px;
+            background-image: url("/setting/images/search.png");
+            opacity: 0.5;
         }
         #btn_find {
             font-size: 12pt;
+        }
+        #findDiv{
+            float: left;
+            width: 520px;
+            height: 44px;
+            border: 1px solid #1E90FF;
+            background-color: white;
         }
     </style>
     <script>
@@ -89,20 +105,30 @@
                 if(flag) {
                     flag=!flag;
                     form2.removeChild(document.getElementById("finder"));
+                    var findDiv = document.createElement("div");
+                    findDiv.id = "findDiv";
                     var findTxt = document.createElement("input");
+                    var findBtn = document.createElement("button");
                     findTxt.name = "findTxt";
                     findTxt.type = "text";
                     findTxt.id = "findTxt";
                     findTxt.placeholder = "  글 검색,해쉬태그 검색";
-                    form2.action = "/search";
+                    form2.action = "/search.do";
+                    findBtn.id = "findBtn";
+                    findBtn.action = "submit";
 
-                    form2.appendChild(findTxt);
-
+                    findDiv.appendChild(findTxt);
+                    findDiv.appendChild(findBtn);
+                    form2.appendChild(findDiv);
                     document.getElementById("btn_find").value = "취소";
 
                 }else{
                     flag=!flag;
-                    form2.removeChild(document.getElementById("findTxt"));
+                    var findDiv=document.getElementById("findDiv");
+                    findDiv.removeChild(document.getElementById("findTxt"));
+                    findDiv.removeChild(document.getElementById("findBtn"));
+                    form2.removeChild(findDiv);
+
                     var finder = document.createElement("button");
                     finder.id = "finder";
                     finder.type = "submit";
@@ -117,7 +143,7 @@
         });
 
         function showView(board_num){
-            location.href = "/detail?board_num="+board_num;
+            location.href = "/detail.do?board_num="+board_num;
         }
 
     </script>
@@ -133,9 +159,6 @@
                     <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
                     <button type="submit" class="search_item"  id="finder" >여기를 눌러 글을 작성해 주세요</button>
                     <input type="button" value="검색" class="search_item search_btn" id="btn_find"/>
-                    <form class="search" style="display: none">
-                        <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
-                    </form>
                 </form>
             </div>
             <div id="board">
@@ -159,6 +182,9 @@
     </article>
 </body>
 <script>
+    // 검색 onkeydown 이벤트
+
+
     //무한 스크롤
     function lastPostFunc() {
         $.get("/board",function (<%=last_bno%>) {

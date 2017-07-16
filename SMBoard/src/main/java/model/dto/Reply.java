@@ -10,6 +10,7 @@ public class Reply {
     private String writer_nick;
     private String content;
     private String regdate;
+    int anony;
     private int like;
 
     public int getReply_num() {
@@ -58,5 +59,13 @@ public class Reply {
 
     public void setLike(int like) {
         this.like = like;
+    }
+
+    public int getAnony() {
+        return anony;
+    }
+
+    public void setAnony(int anony) {
+        this.anony = anony;
     }
 }

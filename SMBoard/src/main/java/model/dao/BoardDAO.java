@@ -17,11 +17,12 @@ public class BoardDAO {
     public List selectAll(){
 
         ArrayList<Board> list = new ArrayList<Board>();
-        Connection con = manager.getConnection();
+        Connection con=null;
         PreparedStatement pstmt = null;
         ResultSet rs=null;
         String sql = "select * from Board order by board_num desc";
         try {
+            con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -47,11 +48,12 @@ public class BoardDAO {
 
     public int countReply(int board_num) {
         int cnt=0;
-        Connection con = manager.getConnection();
+        Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sql = "select count(*) from reply where board_num=?";
         try {
+            con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, board_num);
             rs = pstmt.executeQuery();
@@ -67,11 +69,12 @@ public class BoardDAO {
     }
 
     public void write(String writer_id,String writer_nickname,String content,int anony){
-        Connection con = manager.getConnection();
+        Connection con=null;
         PreparedStatement pstmt=null;
         String sql="insert into board(writer_id,writer_nick,content,anony) values(?,?,?,?)";
         int result;
         try {
+            con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, writer_id);
             pstmt.setString(2, writer_nickname);
@@ -93,13 +96,13 @@ public class BoardDAO {
     }
 
     public Board detailBoard(int board_num){
-        Connection con = manager.getConnection();
+        Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs=null;
         Board board = new Board();
         String sql = "select * from Board where board_num=?";
         try {
-
+            con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, board_num);
             rs = pstmt.executeQuery();
@@ -108,6 +111,7 @@ public class BoardDAO {
                     board.setWriter_id(rs.getString("writer_id"));
                     board.setWriter_nick(rs.getString("writer_nick"));
                     board.setContent(rs.getString("content"));
+                    board.setAnony(rs.getInt("anony"));
                     board.setRegdate(rs.getString("regdate"));
                     board.setLike(rs.getInt("cnt_like"));
                     // int reply = countReply(board.getBoard_num());
@@ -121,12 +125,13 @@ public class BoardDAO {
         return board;
     }
     public void delete(int board_num){
-        Connection con = manager.getConnection();
+        Connection con = null;
         PreparedStatement pstmt=null;
 
         String sql="DELETE FROM board WHERE board_num = ?";
         int result;
         try {
+            con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, board_num);
             result = pstmt.executeUpdate();
@@ -142,7 +147,7 @@ public class BoardDAO {
             manager.freeConnection(con,pstmt);
         }
     }
-    public List selectB(int start){
+   /* public List selectB(int start){
 
         ArrayList<Board> list = new ArrayList<Board>();
         Connection con = manager.getConnection();
@@ -173,6 +178,36 @@ public class BoardDAO {
             manager.freeConnection(con,pstmt,rs);
         }
         return list;
-    }
+    }*/
 
+   public List search(String str){
+       Connection con=null;
+       PreparedStatement pstmt=null;
+       ResultSet rs=null;
+       String sql="select * from board where content like ?";
+       ArrayList list = new ArrayList();
+       try {
+           con = manager.getConnection();
+           pstmt = con.prepareStatement(sql);
+           pstmt.setString(1, "%"+str+"%");
+           rs = pstmt.executeQuery();
+           while (rs.next()) {
+               Board board = new Board();
+               board.setBoard_num(rs.getInt("board_num"));
+               board.setWriter_id(rs.getString("writer_id"));
+               board.setWriter_nick(rs.getString("writer_nick"));
+               board.setContent(rs.getString("content"));
+               board.setAnony(rs.getInt("anony"));
+               board.setRegdate(rs.getString("regdate"));
+               board.setLike(rs.getInt("cnt_like"));
+               list.add(board);
+           }
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }  finally {
+           manager.freeConnection(con,pstmt,rs);
+       }
+        return list;
+   }
 }

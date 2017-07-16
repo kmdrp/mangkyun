@@ -55,7 +55,7 @@
     <%@include file="inc/navbar.jsp"%>
     <div id="login_body">
         <div id="login_form">
-            <form action="/join" method="post">
+            <form action="/join.do" method="post">
                 <br><br><br><br>
                 <input type="text" class="form-control" name="id" placeholder="Enter ID"><br>
                 <input type="password" class="form-control" name="password" placeholder="Enter Password"><br>

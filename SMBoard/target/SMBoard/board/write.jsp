@@ -97,13 +97,13 @@
                     alert("!");
                 }else{
                     form2.method = "post";
-                    form2.action = "/write";
+                    form2.action = "/write.do";
                     form2.submit();
                 }
             });
             btn_cancel.addEventListener("click",function(){
                 var form2=document.getElementById("form2");
-                form2.action="/board"
+                form2.action="/board.do"
                 form2.submit();
             });
         });

@@ -43,9 +43,6 @@
             text-align: center;
             margin-top: 0px;
         }
-        #finder{
-            border:1px solid #dadada;
-        }
         .search_item{
             border:1px solid #dadada;
             width: 480px;
@@ -64,37 +61,15 @@
             padding: 0px;
             margin: 0px;
         }
-        /*#post {
-            margin-top: 10px;
-            width: 100%;
-            height: 100px;
-            background-color: #e3e3e3;
-        }*/
+
         .search_btn{
             width:13%;margin-left:10px;background-color: white;
             float:right;
             text-align: center;
         }
-        .search{
-            display: none;
-        }
+
     </style>
     <script>
-        window.addEventListener("load",function () {
-            var btn_find=document.getElementById("btn_find");
-            var finder = document.getElementById("finder");
-            btn_find.onclick=function(){
-                var tgg=document.getElementById("search2");
-                for(var i;i<tgg.length;i++) {
-                    tgg.display = "block";
-                }
-            }
-        });
-
-
-        function alertA(){
-            alert("aa");
-        }
 
     </script>
 </head>
@@ -121,13 +96,15 @@
             </jsp:include>
         </div>
         <div id="search">
-            <form id="form2" action="/board/reply.jsp" method="post">
+            <form id="form2" action="/reply.do" method="post">
                 <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                <input type="text" class="search_item" placeholder="여기에 댓글을 입력하세요"/>
-                <input type="submit" value="등록" class="search_item search_btn" id="btn_find" style=""/>
-                <form class="search" style="display: none">
-                    <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
-                </form>
+                <input type="text" class="noSize" value="<%=board.getBoard_num()%>" name="board_num" readonly hidden/>
+                <input type="text" class="search_item" name="content" placeholder="여기에 댓글을 입력하세요"/>
+                <div id="btnClick">
+                    <input type="checkbox" name="anony" value="0" checked hidden>
+                    <input type="checkbox" name="anony" value=1>익명
+                </div>
+                <input type="submit" value="등록" class="search_item search_btn" id="btn_find"/>
             </form>
         </div>
 
@@ -139,6 +116,7 @@
                     <jsp:param name="reply_num" value="<%=reply.getReply_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=reply.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=reply.getContent()%>"></jsp:param>
+                    <jsp:param name="anony" value="<%=reply.getAnony()%>"></jsp:param>
                     <jsp:param name="regdate" value="<%=reply.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>

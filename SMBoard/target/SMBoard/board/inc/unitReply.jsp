@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    request.setCharacterEncoding("utf-8");
+    response.setCharacterEncoding("utf-8");
     int reply_num = Integer.parseInt(request.getParameter("reply_num"));
     String writer_nick = request.getParameter("writer_nick");
     String content = request.getParameter("content");

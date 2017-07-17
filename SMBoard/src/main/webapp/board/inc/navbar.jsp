@@ -58,7 +58,7 @@
             var btn_home = document.getElementById("btn_home");
             var btn_user = document.getElementById("btn_user");
             btn_home.onclick=function () {
-                location.href = "/board";
+                location.href = "/board.do";
             }
             btn_user.onclick=function () {
                 alert(" my page "); // 위에 꺼랑 똑같ㅇ

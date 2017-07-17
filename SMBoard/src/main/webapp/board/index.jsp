@@ -1,4 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String id = (String) session.getAttribute("id");
+    if (id != null) {
+        // session에 로그인 기록이 남아있으면 게시판페이지로 간다
+        response.sendRedirect("/board.do");
+    }
+%>
 <html>
 <head>
     <title>login</title>

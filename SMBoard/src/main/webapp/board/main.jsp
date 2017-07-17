@@ -167,7 +167,7 @@
                     last_bno = board.getBoard_num();
                 %>
                 <div onclick="showView(<%=board.getBoard_num()%>)">
-                <jsp:include page="inc/unit.jsp">
+                <jsp:include page="/board/inc/unit.jsp">
                     <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>

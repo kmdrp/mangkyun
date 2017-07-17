@@ -86,7 +86,7 @@
         <a href="/delete?board_num=<%=board.getBoard_num()%>"><input class="search_btn search_item" type="button" value="삭제"/></a>
         <%}%>
         <div id="board">
-            <jsp:include page="inc/unit.jsp">
+            <jsp:include page="/board/inc/unit.jsp">
                 <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
                 <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                 <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
@@ -112,7 +112,7 @@
             <%for(int i=0;i<list.size();i++){
                 Reply reply = list.get(i);
             %>
-                <jsp:include page="inc/unitReply.jsp">
+                <jsp:include page="/board/inc/unitReply.jsp">
                     <jsp:param name="reply_num" value="<%=reply.getReply_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=reply.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=reply.getContent()%>"></jsp:param>

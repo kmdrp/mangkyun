@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <Resource
+            name="jdbc/mariadb"
+            auth="Container"
+            type="javax.sql.DataSource"
+            driverClassName="org.mariadb.jdbc.Driver"
+            loginTimeout="10"
+            maxWait="1000"
+            maxActive="50"
+            username="mysqluser"
+            password="dltjrgus"
+            testOnBorrow="true"
+            url="jdbc:mariadb://kyunihsv.iptime.org:3306/BBS"  />
+
+</Context>

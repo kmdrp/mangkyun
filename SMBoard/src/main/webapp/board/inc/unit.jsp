@@ -35,7 +35,10 @@
 <head>
     <title>Title</title>
     <style>
-        #post{
+        body{
+            height:110px;
+        }
+        .post{
             margin-top: 10px;
             width: 100%;
             height: 110px;
@@ -118,12 +121,12 @@
     </style>
 </head>
 <body>
-    <div id="post">
+    <div class="post">
         <div id="info">
             <div id="writer">
                  <div id="writer_img"><img src="/setting/images/usericon.png"></div>
-                <div id="writer_value"><input type="text" value="<%=writer_nick%>" name="writer_nick" readonly style="margin-top:3px;font-size:12pt;font-weight: bold"/>
-                <input type="text" value="<%=board_num%>" hidden readonly/></div>
+                <div id="writer_value"><input type="text" id="writer_nick" value="<%=writer_nick%>" name="writer_nick" readonly style="margin-top:3px;font-size:12pt;font-weight: bold"/>
+                <input type="text" id="board_num" value="<%=board_num%>" hidden readonly/></div>
             </div>
             <div id="time">
                 <%=regdate%>

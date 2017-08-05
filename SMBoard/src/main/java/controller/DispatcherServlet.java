@@ -27,6 +27,7 @@ public class DispatcherServlet  extends HttpServlet{
         resp.setCharacterEncoding("utf-8");
 
         String uri = req.getRequestURI();
+
         System.out.println("request uri : " + uri);
 
         if (uri.equals("/board.do")) {
@@ -45,6 +46,8 @@ public class DispatcherServlet  extends HttpServlet{
             obj = new ReplyController();
         } else if (uri.equals("/search.do")) {
             obj = new SearchController();
+        } else if (uri.equals("/boardAdd.do")) {
+            obj =new BoardAddController();
         }
 
         viewPage = obj.getResultView();

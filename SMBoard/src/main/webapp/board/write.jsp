@@ -81,7 +81,7 @@
             font-size: 9pt;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         window.addEventListener("load",function(){
 

@@ -24,8 +24,7 @@
 %>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <title>test</title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>    <title>test</title>
     <style>
         body{
             background-color: rgba(239, 239, 239, 0.75);

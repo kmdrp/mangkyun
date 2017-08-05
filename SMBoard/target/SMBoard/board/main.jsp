@@ -1,7 +1,8 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dto.Board" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="org.json.simple.parser.JSONParser" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="org.json.simple.JSONArray" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -9,7 +10,6 @@
     response.setCharacterEncoding("utf-8");
     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String nowDate = format.format(new Date());
-
     String id = (String)session.getAttribute("id");
     if (id == null) {
         System.out.println("로그인 정보 없음");
@@ -18,19 +18,22 @@
         System.out.println("접속자 id : " +id);
         System.out.println();
     }
-    ArrayList<Board> list = (ArrayList)request.getAttribute("list");
-    int last_bno = 0 ;
+    String jsonString = (String) request.getAttribute("jsonStr");
+    JSONParser parser = new JSONParser();
+    JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
+    JSONArray jsonArray = (JSONArray) jsonObject.get("board");
 %>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>test</title>
     <style>
         body{
             background-color: rgba(239, 239, 239, 0.75);
+            height: 1000px;
         }
         #cen{
-            height:100%;
+            height: 1000px;
             width:600px;
             margin: auto;
             background-color: rgba(239, 239, 239, 0.75);
@@ -93,6 +96,11 @@
             height: 44px;
             border: 1px solid #1E90FF;
             background-color: white;
+        }
+        .board_Test{
+            width:100%;
+            height: 110px;
+            background-color: red;
         }
     </style>
     <script>
@@ -162,38 +170,121 @@
                 </form>
             </div>
             <div id="board">
-                <%for(int i=0;i<list.size();i++){
-                    Board board = list.get(i);
-                    last_bno = board.getBoard_num();
+                <%for(int i=0;i<jsonArray.size();i++){
+                    JSONObject board = (JSONObject) jsonArray.get(i);
+                    int board_num = Integer.parseInt((String)board.get("board_num"));
+                    String writer_nick = (String) board.get("writer_nick");
+                    String content = (String) board.get("content");
+                    int anony = Integer.parseInt((String) board.get("anony"));
+                    String regdate = (String) board.get("regdate");
                 %>
-                <div onclick="showView(<%=board.getBoard_num()%>)">
+                <div id="main" name="main" onclick="showView(<%=board.get("board_num")%>)" style="height: 110px;">
                 <jsp:include page="/board/inc/unit.jsp">
-                    <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
-                    <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
-                    <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
-                    <jsp:param name="anony" value="<%=board.getAnony()%>"></jsp:param>
-                    <jsp:param name="regdate" value="<%=board.getRegdate()%>"></jsp:param>
+                    <jsp:param name="board_num" value="<%=board_num%>"></jsp:param>
+                    <jsp:param name="writer_nick" value="<%=writer_nick%>"></jsp:param>
+                    <jsp:param name="content" value="<%=content%>"></jsp:param>
+                    <jsp:param name="anony" value="<%=anony%>"></jsp:param>
+                    <jsp:param name="regdate" value="<%=regdate%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>
                 </div>
+
                 <%}%>
+                <div id="board2"></div>
             </div>
         </div>
     </article>
 </body>
 <script>
+    <%
+        int last_num=(int)request.getAttribute("last_num");
+    %>
+    var last_num=<%=last_num%>;
     // 검색 onkeydown 이벤트
-
-
     //무한 스크롤
+    var sw=false;
+    var post;
+    var temp;
+
+    $(window).ready(function(){
+        post = document.getElementsByClassName("post")[0];
+//      var inn=post.innerHTML;
+        //var inf=$(post).find($("input#writer_nick")).prop("value","acccc");
+
+        // 바꾸는 거 가능 --> 이제 html 복사해서 값만 변경해서 사용
+        var inner=post.innerHTML;
+        //console.log("inner " + inner);
+
+        temp=inner;
+        console.log("$(window).scrollTop() : "+$(window).scrollTop());
+        console.log(" $(document).height() : " + $(document).height() +"  $(window).height() :  "+  $(window).height());
+        console.log(" 차이 : " + ($(document).height() -$(window).height()));
+        sw=true;
+        console.log(" switch : " + sw);
+    });
     function lastPostFunc() {
-        $.get("/board",function (<%=last_bno%>) {
-            $("#board").innerHTML="";
+        console.log(" last_num : "+last_num+" !!! ");
+
+        setTimeout(1000);
+        var url = "/boardDir";
+        var now ="<%=nowDate%>";
+        $.ajax({
+            type:"post",
+            url:url,
+            data:{
+                last_num:last_num,
+                nowdate:now
+            },
+            dataType:"json",
+            success:[function (data,status) {
+                var boardArr=data.board;
+                last_num=data.last_num;
+                for(var i=0;i<boardArr.length;i++) {
+                    var regdate=boardArr[i].regdate;
+                    var tmp=$.parseHTML(temp,false);
+
+                    if (regdate != now) {
+                        if(regdate.substring(0,10)==(now.substring(0,10))){
+                            var regValue = parseInt(regdate.substring(11, 13)) * 3600 + parseInt(regdate.substring(14, 16)) * 60 + parseInt(regdate.substring(17, 19));
+                            var nowValue = parseInt(now.substring(11, 13)) * 3600 + parseInt(now.substring(14, 16)) * 60 +parseInt(now.substring(17, 19));
+                            var timeDiff = nowValue - regValue;
+                            if (timeDiff < 60) {
+                                regdate = "방금";
+                            } else if (timeDiff > 60 && timeDiff < 3600) {
+                                regdate =(timeDiff / 60).toString()+"분 전";
+                            } else if (timeDiff > 3600) {
+                                regdate = regdate.substring(5, 7) + "/" + regdate.substring(8, 10) + " " + regdate.substring(11, 16);
+                            }
+                        }else{
+                            regdate = regdate.substring(5, 7) + "/" + regdate.substring(8, 10) + " " + regdate.substring(11, 16);
+                        }
+                    }else{
+                        regdate="방금";
+                    }
+                    $(tmp).find("input#writer_nick").attr("value",boardArr[i].writer_nick);
+                    $(tmp).find("input#board_num").attr("value", boardArr[i].board_num);
+                    $(tmp).find("div#time").text(regdate);
+                    $(tmp).find("div#content1").text(boardArr[i].content);
+                    $(tmp).appendTo($("#board"));
+                    sw=true;
+                }
+
+            }],
+            error:{
+            }
         });
     }
     $(window).scroll( function() {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
-            lastPostFunc();
+        if ($(window).scrollTop() >= $(document).height() - $("article").height()) {
+            console.log("$(window).scrollTop() : "+$(window).scrollTop());
+            console.log(" $(document).height() : " + $(document).height() +"  $(window).height() :  "+  $(window).height());
+            console.log(" 차이 : " + ($(document).height() -$(window).height()));
+            if(sw) {
+                sw=false;
+                lastPostFunc();
+            }else{
+                console.log(" switch : " + sw);
+            }
         }
     });
 

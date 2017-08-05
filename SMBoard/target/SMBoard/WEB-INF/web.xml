@@ -9,9 +9,16 @@
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>controller.DispatcherServlet</servlet-class>
   </servlet>
-  
+  <servlet>
+    <servlet-name>boardDir</servlet-name>
+    <servlet-class>board.controller.BoardDir</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>boardDir</servlet-name>
+    <url-pattern>/boardDir</url-pattern>
   </servlet-mapping>
 </web-app>

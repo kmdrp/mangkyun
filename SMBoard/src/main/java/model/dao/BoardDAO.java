@@ -68,7 +68,7 @@ public class BoardDAO {
         return cnt;
     }
 
-    public void write(String writer_id,String writer_nickname,String content,int anony){
+    public synchronized void write(String writer_id,String writer_nickname,String content,int anony){
         Connection con=null;
         PreparedStatement pstmt=null;
         String sql="insert into board(writer_id,writer_nick,content,anony) values(?,?,?,?)";
@@ -147,8 +147,9 @@ public class BoardDAO {
             manager.freeConnection(con,pstmt);
         }
     }
-   /* public List selectB(int start){
-
+    public List selectB(int first_b_id){
+        int last_b_id=first_b_id-25;
+        first_b_id=first_b_id;
         ArrayList<Board> list = new ArrayList<Board>();
         Connection con = manager.getConnection();
         PreparedStatement pstmt = null;
@@ -156,8 +157,8 @@ public class BoardDAO {
         String sql = "select * from Board where board_num>=? and board_num<?  order by board_num desc";
         try {
             pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1,start);
-            pstmt.setInt(2,start+30);
+            pstmt.setInt(1,last_b_id);
+            pstmt.setInt(2,first_b_id);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Board board = new Board();
@@ -178,7 +179,7 @@ public class BoardDAO {
             manager.freeConnection(con,pstmt,rs);
         }
         return list;
-    }*/
+    }
 
    public List search(String str){
        Connection con=null;
@@ -209,5 +210,26 @@ public class BoardDAO {
            manager.freeConnection(con,pstmt,rs);
        }
         return list;
+   }
+   public int getLastId(){
+       Connection con=null;
+       PreparedStatement pstmt=null;
+       ResultSet rs=null;
+       String sql="select MAX(board_num) as last_id from board";
+       int last_num=0;
+
+       try {
+           con = manager.getConnection();
+           pstmt = con.prepareStatement(sql);
+           rs = pstmt.executeQuery();
+           if (rs.next()) {
+               last_num = rs.getInt("last_id");
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       } finally {
+           manager.freeConnection(con,pstmt,rs);
+       }
+       return last_num;
    }
 }

@@ -89,6 +89,4 @@ public class MemberDAO {
         return nick;
 
     }
-
-
 }

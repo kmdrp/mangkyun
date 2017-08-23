@@ -27,7 +27,7 @@ public class BoardController implements Controller {
         if(request.getParameter("last_num")==null){
             System.out.println("lastNum = null");
             isFirst=true;
-            last_num=dao.getLastId();
+            last_num=dao.getLastId()+1;
         }else{
             last_num =Integer.parseInt(request.getParameter("last_num"));
             System.out.println(" receive lastNum : " + last_num);
@@ -36,6 +36,7 @@ public class BoardController implements Controller {
                 last_num = dao.getLastId()+1;
             }
         }
+
         List list = dao.selectB(last_num);
         String jsonStr="{\"board\":[";
 

@@ -27,7 +27,7 @@ public class DispatcherServlet  extends HttpServlet{
         resp.setCharacterEncoding("utf-8");
 
         String uri = req.getRequestURI();
-
+        int board_num=0;
         System.out.println("request uri : " + uri);
 
         if (uri.equals("/board.do")) {
@@ -35,7 +35,9 @@ public class DispatcherServlet  extends HttpServlet{
         } else if (uri.equals("/write.do")) {
             obj = new WriteController();
         }else if (uri.equals("/delete.do")) {
-            obj = new DeleteController();
+            board_num = Integer.parseInt(req.getParameter("board_num"));
+            System.out.println("dispatcher b_num : "+board_num);
+            obj = new DeleteController(board_num);
         }else if (uri.equals("/detail.do")) {
             obj = new DetailController();
         }else if (uri.equals("/login.do")) {

@@ -97,10 +97,12 @@
             border: 1px solid #1E90FF;
             background-color: white;
         }
-        .board_Test{
-            width:100%;
-            height: 110px;
-            background-color: red;
+        #main{
+            background-color: white;
+            margin-top: 10px;
+        }
+        #board{
+            background-color: rgba(239, 239, 239, 0.75);;
         }
     </style>
     <script>
@@ -175,10 +177,13 @@
                     int board_num = Integer.parseInt((String)board.get("board_num"));
                     String writer_nick = (String) board.get("writer_nick");
                     String content = (String) board.get("content");
+                    int line = content.split("<br>").length;
+                    content.replaceAll("\r", "<br>");
                     int anony = Integer.parseInt((String) board.get("anony"));
                     String regdate = (String) board.get("regdate");
                 %>
-                <div id="main" name="main" onclick="showView(<%=board.get("board_num")%>)" style="height: 110px;">
+                <div id="main" name="main" onclick="showView(<%=board.get("board_num")%>)"
+                     style="<%if(line==1){%>height:105px;<%}else if(line==2){%>height:122px;<%}else if(line==3){%>height:129px;<%}%>" >
                 <jsp:include page="/board/inc/unit.jsp">
                     <jsp:param name="board_num" value="<%=board_num%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=writer_nick%>"></jsp:param>
@@ -186,6 +191,7 @@
                     <jsp:param name="anony" value="<%=anony%>"></jsp:param>
                     <jsp:param name="regdate" value="<%=regdate%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
+                    <jsp:param name="line" value="<%=line%>"></jsp:param>
                 </jsp:include>
                 </div>
 
@@ -207,18 +213,15 @@
     var temp;
 
     $(window).ready(function(){
-        post = document.getElementsByClassName("post")[0];
+        post = document.getElementsByName("main")[0];
 //      var inn=post.innerHTML;
         //var inf=$(post).find($("input#writer_nick")).prop("value","acccc");
 
         // 바꾸는 거 가능 --> 이제 html 복사해서 값만 변경해서 사용
         var inner=post.innerHTML;
-        //console.log("inner " + inner);
+        console.log("inner " + inner);
 
         temp=inner;
-        console.log("$(window).scrollTop() : "+$(window).scrollTop());
-        console.log(" $(document).height() : " + $(document).height() +"  $(window).height() :  "+  $(window).height());
-        console.log(" 차이 : " + ($(document).height() -$(window).height()));
         sw=true;
         console.log(" switch : " + sw);
     });
@@ -265,7 +268,14 @@
                     $(tmp).find("input#board_num").attr("value", boardArr[i].board_num);
                     $(tmp).find("div#time").text(regdate);
                     $(tmp).find("div#content1").text(boardArr[i].content);
-                    $(tmp).appendTo($("#board"));
+                    var mainDiv = document.createElement("div");
+                    $(mainDiv).attr("id", "main");
+                    $(mainDiv).attr("name","main");
+                    $(mainDiv).attr("onclick","showView("+boardArr[i].board_num+")");
+
+
+                    $(tmp).appendTo(mainDiv);
+                    $(mainDiv).appendTo($("#board"));
                     sw=true;
                 }
 
@@ -275,6 +285,7 @@
         });
     }
     $(window).scroll( function() {
+        //이제 다운스크롤일때만 로드하도록 수 (일단 지금은 에러없지만 추후 적용)
         if ($(window).scrollTop() >= $(document).height() - $("article").height()) {
             console.log("$(window).scrollTop() : "+$(window).scrollTop());
             console.log(" $(document).height() : " + $(document).height() +"  $(window).height() :  "+  $(window).height());

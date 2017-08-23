@@ -24,7 +24,8 @@
 %>
 <html>
 <head>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>    <title>test</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <title>test</title>
     <style>
         body{
             background-color: rgba(239, 239, 239, 0.75);
@@ -35,24 +36,36 @@
             margin: auto;
             background-color: rgba(239, 239, 239, 0.75);
         }
-        #search{
-            background-color: rgba(239, 239, 239, 0.75);
+        #write_rep{
+            background-color: white;
             width: 100%;
             height: 45px;
             text-align: center;
             margin-top: 0px;
         }
-        .search_item{
+        #finder{
             border:1px solid #dadada;
+        }
+        #btn_sbm{
+            background-color: #ff5853;
+            margin-top:7px;
+            width:40px;
+            height:30px;
+            display:inline-block;
+            color:black;
+            font-size: 12pt;
+            text-align: center;
+        }
+        .search_item{
+            margin-top:7px;
+            background-color: rgba(197, 197, 197, 0.38);
             width: 480px;
-            height: 45px;
+            height: 30px;
             display: inline-block;
             float: left;
-            margin:0px;
             font-size:12pt;
-            background-color: #FFFFFF;
             text-align: left;
-            color:darkgrey;
+            color: black;
         }
         .noSize {
             width: 0px;
@@ -60,13 +73,21 @@
             padding: 0px;
             margin: 0px;
         }
-
         .search_btn{
-            width:13%;margin-left:10px;background-color: white;
+            width:10%;
+            margin-left:10px;
+            margin-right:15px;
+            background-color: white;
             float:right;
             text-align: center;
         }
-
+        .search{
+            display: none;
+            padding: 10px;
+        }
+        #form2{
+            margin-left:15px;
+        }
     </style>
     <script>
 
@@ -78,15 +99,11 @@
 </nav>
 <article>
     <div id="cen">
-        <%
-            if(id.equals(board.getWriter_id())){
-        %>
-        <a href="/update?board_num=<%=board.getBoard_num()%>"><input class="search_btn search_item" type="button" value="수정"/></a>
-        <a href="/delete?board_num=<%=board.getBoard_num()%>"><input class="search_btn search_item" type="button" value="삭제"/></a>
-        <%}%>
+
         <div id="board">
-            <jsp:include page="/board/inc/unit.jsp">
+            <jsp:include page="inc/detail_unit.jsp">
                 <jsp:param name="board_num" value="<%=board.getBoard_num()%>"></jsp:param>
+                <jsp:param name="writer_id" value="<%=board.getWriter_id()%>"></jsp:param>
                 <jsp:param name="writer_nick" value="<%=board.getWriter_nick()%>"></jsp:param>
                 <jsp:param name="content" value="<%=board.getContent()%>"></jsp:param>
                 <jsp:param name="anony" value="<%=board.getAnony()%>"></jsp:param>
@@ -94,16 +111,15 @@
                 <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
             </jsp:include>
         </div>
-        <div id="search">
-            <form id="form2" action="/reply.do" method="post">
+
+        <div id="write_rep">
+            <form id="form2" action="/board/reply.jsp" method="post">
                 <input type="text" class="noSize" value="<%=id%>" name="id" readonly hidden/>
-                <input type="text" class="noSize" value="<%=board.getBoard_num()%>" name="board_num" readonly hidden/>
-                <input type="text" class="search_item" name="content" placeholder="여기에 댓글을 입력하세요"/>
-                <div id="btnClick">
-                    <input type="checkbox" name="anony" value="0" checked hidden>
-                    <input type="checkbox" name="anony" value=1>익명
-                </div>
-                <input type="submit" value="등록" class="search_item search_btn" id="btn_find"/>
+                <input type="text" class="search_item" placeholder="여기에 댓글을 입력하세요"/>
+                <input type="submit" value="등록" class="search_btn" id="btn_sbm" />
+                <form class="search" style="display: none">
+                    <input type="search" id="search2" name="keyword" placeholder="글 내용,해시태그 검색" style="display: none"/>
+                </form>
             </form>
         </div>
 
@@ -111,11 +127,10 @@
             <%for(int i=0;i<list.size();i++){
                 Reply reply = list.get(i);
             %>
-                <jsp:include page="/board/inc/unitReply.jsp">
+                <jsp:include page="inc/unitReply.jsp">
                     <jsp:param name="reply_num" value="<%=reply.getReply_num()%>"></jsp:param>
                     <jsp:param name="writer_nick" value="<%=reply.getWriter_nick()%>"></jsp:param>
                     <jsp:param name="content" value="<%=reply.getContent()%>"></jsp:param>
-                    <jsp:param name="anony" value="<%=reply.getAnony()%>"></jsp:param>
                     <jsp:param name="regdate" value="<%=reply.getRegdate()%>"></jsp:param>
                     <jsp:param name="nowDate" value="<%=nowDate%>"></jsp:param>
                 </jsp:include>

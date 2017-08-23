@@ -21,6 +21,18 @@ public class WriteController implements Controller {
             String id = (String) session.getAttribute("id");
             String nick = (String) session.getAttribute("nick");
             String content = request.getParameter("content");
+
+            String[] text = content.split("\n");
+
+            for(int i=0;i<text.length;i++) {
+                if (i == 0) {
+                    content = text[i];
+                }else{
+                    content += "<br>" + text[i];
+                }
+            }
+
+
             String an[]=request.getParameterValues("anony");
             int anon=0;
             if(an.length==2){

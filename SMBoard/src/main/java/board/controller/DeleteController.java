@@ -8,9 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DeleteController implements Controller {
     BoardDAO boardDAO;
+    int board_num;
+    public DeleteController(int board_num){
+        this.board_num = board_num;
+    }
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         boardDAO = new BoardDAO();
-        int board_num = Integer.parseInt(request.getParameter("board_num"));
+        System.out.println(" del cntrl board_num :L "  +board_num);
         boardDAO.delete(board_num);
     }
 

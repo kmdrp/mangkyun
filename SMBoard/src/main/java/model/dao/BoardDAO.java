@@ -99,8 +99,8 @@ public class BoardDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs=null;
-        Board board = new Board();
-        String sql = "select * from Board where board_num=?";
+        String sql = "select * from board where board_num=?";
+        Board board=new Board();
         try {
             con = manager.getConnection();
             pstmt = con.prepareStatement(sql);
@@ -160,6 +160,7 @@ public class BoardDAO {
             pstmt.setInt(1,last_b_id);
             pstmt.setInt(2,first_b_id);
             rs = pstmt.executeQuery();
+
             while (rs.next()) {
                 Board board = new Board();
                 board.setBoard_num(rs.getInt("board_num"));
